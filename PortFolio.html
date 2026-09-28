@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chandan Kumar — Full-Stack &amp; AI/ML Engineer</title>
+<meta name="description" content="Portfolio of Chandan Kumar, Full-Stack Developer and AI/ML Engineer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#10141B;
+    --bg-panel:#181D26;
+    --bg-panel-2:#1E2430;
+    --line:#2A313E;
+    --ink:#E8E6E0;
+    --ink-dim:#B9BFC9;
+    --muted:#7C8494;
+    --teal:#4FB8AC;
+    --amber:#E3A857;
+    --add:#7FBF8F;
+    --del:#C97A70;
+    --radius:10px;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--bg-void);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ::selection{background:var(--teal); color:#0A0D12;}
+
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  code, .mono{font-family:var(--mono);}
+
+  /* background texture: faint grid */
+  .grid-bg{
+    position:fixed; inset:0; z-index:-1;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.18;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  /* ---------- NAV (editor tabs) ---------- */
+  header.tabbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(16,20,27,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .tabbar-inner{
+    max-width:1080px; margin:0 auto; padding:0 20px;
+    display:flex; align-items:center; gap:2px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .tabbar-inner::-webkit-scrollbar{display:none;}
+  .brand{
+    font-family:var(--mono); font-weight:700; font-size:14px;
+    color:var(--teal); padding:14px 16px 14px 0; white-space:nowrap;
+    letter-spacing:0.02em;
+  }
+  .tab{
+    font-family:var(--mono); font-size:13px; color:var(--muted);
+    text-decoration:none; white-space:nowrap;
+    padding:13px 14px; border-bottom:2px solid transparent;
+    display:flex; align-items:center; gap:7px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .tab .dot{width:6px; height:6px; border-radius:50%; background:var(--muted); flex:none;}
+  .tab:hover{color:var(--ink);}
+  .tab:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .tab.c-about .dot{background:var(--amber);}
+  .tab.c-exp .dot{background:var(--add);}
+  .tab.c-skills .dot{background:var(--teal);}
+  .tab.c-proj .dot{background:#8AA6E0;}
+  .tab.c-cert .dot{background:var(--amber);}
+  .tab.c-resume .dot{background:var(--del);}
+  .tab.c-contact .dot{background:var(--muted);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 64px;
+    min-height:78vh;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .prompt-line{
+    font-family:var(--mono); font-size:14px; color:var(--muted);
+    margin-bottom:22px; display:flex; gap:10px; align-items:center;
+  }
+  .prompt-line .user{color:var(--teal);}
+  .prompt-line .path{color:var(--amber);}
+  #typed{color:var(--ink);}
+  .cursor{
+    display:inline-block; width:9px; height:18px; background:var(--teal);
+    margin-left:2px; vertical-align:-3px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero h1{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(34px, 6vw, 62px);
+    line-height:1.05;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 .accent{color:var(--teal);}
+  .hero .role{
+    font-size:clamp(16px, 2.4vw, 20px);
+    color:var(--ink-dim);
+    max-width:640px;
+    margin:0 0 8px;
+  }
+  .hero .comment{
+    font-family:var(--mono); color:var(--muted); font-size:14px;
+    margin:18px 0 34px; max-width:680px;
+  }
+  .hero .comment .slashes{color:#5A6272;}
+
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px;}
+  .btn{
+    font-family:var(--mono); font-size:14px; font-weight:500;
+    padding:12px 20px; border-radius:8px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line);
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .btn-primary{background:var(--teal); color:#0A0D12; border-color:var(--teal); font-weight:700;}
+  .btn-primary:hover{background:#5FC7BB;}
+  .btn-ghost{color:var(--ink); background:var(--bg-panel);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal);}
+
+  /* ---------- SECTION shell ---------- */
+  section{padding:76px 0;}
+  section + section{border-top:1px solid var(--line);}
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; color:var(--muted);
+    text-transform:uppercase; letter-spacing:0.14em;
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{content:'//'; color:#4A5364;}
+  h2.section-title{
+    font-family:var(--mono); font-size:clamp(22px,3.4vw,32px);
+    font-weight:700; margin:0 0 8px; letter-spacing:-0.01em;
+  }
+  .section-sub{color:var(--ink-dim); max-width:640px; margin:0 0 40px; font-size:15.5px;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:start;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{color:var(--ink-dim); font-size:15.5px; margin:0 0 16px;}
+  .about-text strong{color:var(--ink); font-weight:600;}
+  .facts{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .facts dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:10px 16px; font-size:14px;}
+  .facts dt{font-family:var(--mono); color:var(--muted);}
+  .facts dd{margin:0; color:var(--ink);}
+
+  /* ---------- EXPERIENCE — git log ---------- */
+  .commit{
+    border:1px solid var(--line); background:var(--bg-panel);
+    border-radius:var(--radius); margin-bottom:16px; overflow:hidden;
+  }
+  .commit-head{
+    display:flex; align-items:center; gap:14px; padding:18px 20px;
+    cursor:pointer; user-select:none; background:none; border:none; width:100%;
+    text-align:left; color:inherit; font:inherit;
+  }
+  .commit-head:focus-visible{outline:2px solid var(--teal); outline-offset:-2px;}
+  .hash{
+    font-family:var(--mono); color:var(--amber); font-size:13px;
+    background:rgba(227,168,87,0.1); padding:3px 8px; border-radius:5px; flex:none;
+  }
+  .commit-main{flex:1; min-width:0;}
+  .commit-msg{font-weight:700; font-size:15.5px; color:var(--ink);}
+  .commit-meta{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:3px;}
+  .commit-stats{font-family:var(--mono); font-size:12.5px; flex:none; display:flex; gap:10px; align-items:center;}
+  .stat-add{color:var(--add);}
+  .stat-del{color:var(--del);}
+  .chevron{transition:transform .2s ease; color:var(--muted); flex:none;}
+  .commit.open .chevron{transform:rotate(90deg);}
+  .commit-body{
+    max-height:0; overflow:hidden; transition:max-height .3s ease;
+    border-top:1px solid transparent;
+  }
+  .commit.open .commit-body{border-top:1px solid var(--line);}
+  .commit-body-inner{padding:18px 20px 20px 20px;}
+  .diff-line{
+    font-family:var(--mono); font-size:13.5px; line-height:1.75;
+    padding-left:18px; position:relative; color:var(--ink-dim);
+  }
+  .diff-line::before{content:'+'; position:absolute; left:2px; color:var(--add); font-weight:700;}
+  .commit-tags{margin-top:14px; display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-dim);
+    background:var(--bg-panel-2); border:1px solid var(--line);
+    padding:4px 9px; border-radius:5px;
+  }
+  .link-line{margin-top:14px; font-family:var(--mono); font-size:13px;}
+  .link-line a{color:var(--teal); text-decoration:none; border-bottom:1px dotted var(--teal);}
+
+  /* ---------- SKILLS — package.json ---------- */
+  .code-panel{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .code-panel .file-bar{
+    display:flex; align-items:center; gap:8px; padding:12px 18px;
+    border-bottom:1px solid var(--line); font-family:var(--mono); font-size:12.5px; color:var(--muted);
+  }
+  .file-bar .dots{display:flex; gap:6px;}
+  .file-bar .dots span{width:9px; height:9px; border-radius:50%; background:var(--line);}
+  .code-panel pre{
+    margin:0; padding:22px 24px; overflow-x:auto;
+    font-family:var(--mono); font-size:13.5px; line-height:1.85; color:var(--ink-dim);
+  }
+  .code-panel .k{color:var(--teal);}
+  .code-panel .s{color:var(--amber);}
+  .code-panel .p{color:#5A6272;}
+  .code-panel .b{color:var(--ink);}
+
+  /* ---------- PROJECTS — pinned repos ---------- */
+  .repo-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:18px;}
+  @media (max-width:760px){.repo-grid{grid-template-columns:1fr;}}
+  .repo-card{
+    border:1px solid var(--line); background:var(--bg-panel); border-radius:var(--radius);
+    padding:20px 22px; transition:border-color .15s ease, transform .15s ease;
+  }
+  .repo-card:hover{border-color:var(--teal); transform:translateY(-3px);}
+  .repo-card .repo-name{
+    font-family:var(--mono); font-weight:700; font-size:15px; color:var(--ink);
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .repo-card .repo-name svg{flex:none; color:var(--muted);}
+  .repo-card p{color:var(--ink-dim); font-size:13.8px; margin:0 0 14px; min-height:42px;}
+  .repo-foot{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  .lang-chip{font-family:var(--mono); font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px;}
+  .lang-chip .swatch{width:9px; height:9px; border-radius:50%; display:inline-block;}
+  .repo-card a.repo-link{
+    font-family:var(--mono); font-size:12.5px; color:var(--teal); text-decoration:none;
+    border:1px solid var(--line); padding:5px 10px; border-radius:6px;
+  }
+  .repo-card a.repo-link:hover{border-color:var(--teal);}
+  .repo-card.featured{grid-column:1 / -1; border-color:var(--amber);}
+  .repo-card.featured .repo-name{color:var(--amber);}
+
+  /* ---------- CERTIFICATIONS — ledger ---------- */
+  .ledger{border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--bg-panel);}
+  .ledger-row{
+    display:flex; align-items:center; gap:14px; padding:14px 20px;
+    border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .ledger-row:last-child{border-bottom:none;}
+  .ledger-row:hover{background:var(--bg-panel-2);}
+  .ledger-icon{font-family:var(--mono); color:var(--amber); flex:none; font-size:13px;}
+  .ledger-name{color:var(--ink); font-weight:600; flex:1;}
+  .ledger-issuer{color:var(--muted); font-family:var(--mono); font-size:12.5px;}
+
+  .pub-block{
+    margin-top:36px; border-left:2px solid var(--teal); padding:6px 0 6px 20px;
+  }
+  .pub-block .p-label{font-family:var(--mono); font-size:12px; color:var(--teal); text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px;}
+  .pub-block p{color:var(--ink-dim); font-size:14.5px; margin:0;}
+
+  /* ---------- RESUME ---------- */
+  .resume-panel{
+    display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center;
+  }
+  @media (max-width:760px){.resume-panel{grid-template-columns:1fr;}}
+  .resume-preview{
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--bg-panel);
+    aspect-ratio:3/4;
+  }
+  .resume-preview iframe{width:100%; height:100%; border:none; background:#fff;}
+  .resume-actions p{color:var(--ink-dim); font-size:15px; margin:0 0 22px;}
+  .resume-actions .btn{margin-right:10px; margin-bottom:10px;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:70px 0 50px;}
+  .contact-term{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 28px;
+  }
+  .contact-term .line{font-family:var(--mono); font-size:14px; margin-bottom:10px; color:var(--ink-dim);}
+  .contact-term .line .k{color:var(--teal);}
+  .contact-links{display:flex; flex-wrap:wrap; gap:14px; margin-top:20px;}
+  .contact-links a{
+    font-family:var(--mono); font-size:13.5px; color:var(--ink); text-decoration:none;
+    border:1px solid var(--line); padding:9px 15px; border-radius:7px;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .contact-links a:hover{border-color:var(--teal); color:var(--teal);}
+  .fine-print{margin-top:40px; font-family:var(--mono); font-size:12px; color:#4A5364; text-align:center;}
+
+  @media (max-width:600px){
+    .about-grid{gap:24px;}
+    section{padding:56px 0;}
+    .commit-stats{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="tabbar">
+  <nav class="tabbar-inner" aria-label="Primary">
+    <span class="brand">~/chandan</span>
+    <a class="tab c-about" href="#about"><span class="dot"></span>about.md</a>
+    <a class="tab c-exp" href="#experience"><span class="dot"></span>experience.log</a>
+    <a class="tab c-skills" href="#skills"><span class="dot"></span>skills.json</a>
+    <a class="tab c-proj" href="#projects"><span class="dot"></span>projects</a>
+    <a class="tab c-cert" href="#certifications"><span class="dot"></span>certs.md</a>
+    <a class="tab c-resume" href="#resume"><span class="dot"></span>resume.pdf</a>
+    <a class="tab c-contact" href="#contact"><span class="dot"></span>contact.sh</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="prompt-line"><span class="user">chandan@dev</span><span>:</span><span class="path">~</span><span>$</span> <span id="typed"></span><span class="cursor" aria-hidden="true"></span></div>
+    <h1>Chandan Kumar<br><span class="accent">Full-Stack &amp; AI/ML Engineer</span></h1>
+    <p class="role">MCA '25 grad building scalable web applications and end-to-end machine learning pipelines. 16+ months across three internships in web development, data science, and applied AI.</p>
+    <p class="comment"><span class="slashes">//</span> currently open to Software Engineering roles — targeting large-scale, high-impact systems</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="resume.pdf" target="_blank" rel="noopener">▸ View Resume</a>
+      <a class="btn btn-ghost" href="resume.pdf" download="Chandan_Kumar_Resume.pdf">⭳ Download PDF</a>
+      <a class="btn btn-ghost" href="https://github.com/Chandan21776" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/chandankumar-80050a249" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="wrap reveal">
+    <div class="eyebrow">01 · about.md</div>
+    <h2 class="section-title">Summary</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>Results-driven Full-Stack Developer and AI/ML Engineer</strong> with a Master's in Computer Applications and hands-on experience spanning three internships across web development, data science, and artificial intelligence.</p>
+        <p>Comfortable moving between building responsive, production-grade UIs and shipping end-to-end ML workflows — from data cleaning and feature engineering through model training, evaluation, and deployment.</p>
+        <p>Passionate about solving complex engineering problems with clean, efficient, testable code, and about turning raw data into decisions that matter.</p>
+      </div>
+      <div class="facts">
+        <dl>
+          <dt>Location</dt><dd>Wagholi, Pune, Maharashtra, India</dd>
+          <dt>Education</dt><dd>MCA, JSPM University (2023–25)</dd>
+          <dt>Phone</dt><dd>+91-8856839400</dd>
+          <dt>Email</dt><dd>chandan21776@gmail.com</dd>
+          <dt>GitHub</dt><dd><a href="https://github.com/Chandan21776" target="_blank" rel="noopener">Chandan21776</a></dd>
+          <dt>Focus</dt><dd>Full-stack web · ML pipelines · data viz</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="wrap reveal">
+    <div class="eyebrow">02 · git log --stat</div>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-sub">Reverse-chronological, like any good log. Click a commit to expand its diff.</p>
+
+    <div class="commit">
+      <button class="commit-head" aria-expanded="false">
+        <span class="hash">a91f3c2</span>
+        <span class="commit-main">
+          <div class="commit-msg">AI/ML Intern @ Elevate Labs</div>
+          <div class="commit-meta">Jan 2026 – Apr 2026 · Remote</div>
+        </span>
+        <span class="commit-stats"><span class="stat-add">+5</span><span class="stat-del">files</span></span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="commit-body">
+        <div class="commit-body-inner">
+          <div class="diff-line">Built and optimized machine learning models for predictive analysis, applying supervised learning across real-world datasets to lift accuracy.</div>
+          <div class="diff-line">Executed complete end-to-end ML workflows — cleaning, feature engineering, training, validation — cutting pipeline iteration time.</div>
+          <div class="diff-line">Derived actionable insights from complex datasets to directly inform data-driven decisions.</div>
+          <div class="diff-line">Collaborated on scalable, production-ready AI solutions, deepening understanding of deployment pipelines.</div>
+          <div class="diff-line">Rapidly adopted new tools and algorithms in a fast-paced, self-directed environment.</div>
+          <div class="commit-tags">
+            <span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Pandas</span><span class="tag">Model Deployment</span>
+          </div>
+          <div class="link-line">deployed → <a href="https://aifitnesscoach-psi.vercel.app/" target="_blank" rel="noopener">aifitnesscoach-psi.vercel.app</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="commit">
+      <button class="commit-head" aria-expanded="false">
+        <span class="hash">7e02d4b</span>
+        <span class="commit-main">
+          <div class="commit-msg">Data Science &amp; AI Intern @ CodeAlpha</div>
+          <div class="commit-meta">Jun 2025 – Dec 2025 · Pune / Virtual</div>
+        </span>
+        <span class="commit-stats"><span class="stat-add">+4</span><span class="stat-del">files</span></span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="commit-body">
+        <div class="commit-body-inner">
+          <div class="diff-line">Completed a dual internship in AI and Data Science, delivering hands-on projects across model development, analysis, and prototyping.</div>
+          <div class="diff-line">Designed AI solutions covering preprocessing, feature selection, and classification/regression models with measurable benchmarks.</div>
+          <div class="diff-line">Received a Letter of Recommendation for dedication, initiative, and technical performance.</div>
+          <div class="diff-line">Context-switched across AI and data science tracks while maintaining quality output on both.</div>
+          <div class="commit-tags">
+            <span class="tag">Python</span><span class="tag">Data Preprocessing</span><span class="tag">Classification</span><span class="tag">Regression</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="commit">
+      <button class="commit-head" aria-expanded="false">
+        <span class="hash">3b8a91c</span>
+        <span class="commit-main">
+          <div class="commit-msg">Full-Stack Web Developer Intern @ The Developers Arena</div>
+          <div class="commit-meta">Jan 2025 – Jun 2025 · Pune / Virtual</div>
+        </span>
+        <span class="commit-stats"><span class="stat-add">+6</span><span class="stat-del">files</span></span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="commit-body">
+        <div class="commit-body-inner">
+          <div class="diff-line">Developed and maintained responsive, cross-browser web apps using Java, Python, SQL, HTML, CSS, and JavaScript.</div>
+          <div class="diff-line">Designed interactive, accessible UIs and integrated backend REST APIs for seamless full-stack experiences.</div>
+          <div class="diff-line">Managed relational database operations in SQL, optimizing queries for efficient data retrieval.</div>
+          <div class="diff-line">Designed user-centered wireframes and prototypes applying UX principles to improve usability.</div>
+          <div class="diff-line">Contributed to debugging, unit testing, and deployment cycles, reducing production defects.</div>
+          <div class="diff-line">Collaborated in an agile team through code reviews, sprint planning, and iterative delivery.</div>
+          <div class="commit-tags">
+            <span class="tag">Java</span><span class="tag">SQL</span><span class="tag">REST APIs</span><span class="tag">HTML/CSS/JS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="wrap reveal">
+    <div class="eyebrow">03 · skills.json</div>
+    <h2 class="section-title">Technical Skills</h2>
+    <p class="section-sub">Dependencies of the stack, grouped by role.</p>
+    <div class="code-panel">
+      <div class="file-bar"><span class="dots"><span></span><span></span><span></span></span> skills.json</div>
+      <pre><span class="p">{</span>
+  <span class="k">"languages"</span><span class="p">:</span> <span class="s">["Python", "Java", "SQL", "JavaScript", "HTML5", "CSS3"]</span><span class="p">,</span>
+  <span class="k">"ai_ml"</span><span class="p">:</span> <span class="s">["Machine Learning", "Data Preprocessing", "Model Training &amp; Evaluation", "End-to-End ML Workflows"]</span><span class="p">,</span>
+  <span class="k">"databases"</span><span class="p">:</span> <span class="s">["MySQL", "MongoDB", "SQL DBMS", "Query Optimization", "Database Design"]</span><span class="p">,</span>
+  <span class="k">"frameworks"</span><span class="p">:</span> <span class="s">["React.js", "Pandas", "NumPy"]</span><span class="p">,</span>
+  <span class="k">"tools"</span><span class="p">:</span> <span class="s">["Power BI", "Git", "VS Code", "REST APIs", "Data Visualization"]</span><span class="p">,</span>
+  <span class="k">"design"</span><span class="p">:</span> <span class="s">["UI/UX Design", "Responsive Web Design", "Figma (basic)"]</span><span class="p">,</span>
+  <span class="k">"soft_skills"</span><span class="p">:</span> <span class="s">["Analytical Thinking", "Problem Solving", "Cross-functional Collaboration", "Adaptability"]</span>
+<span class="p">}</span></pre>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="wrap reveal">
+    <div class="eyebrow">04 · pinned repositories</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-sub">A key analytical build, plus active repos on GitHub.</p>
+    <div class="repo-grid">
+      <div class="repo-card featured">
+        <div class="repo-name">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          SmartMedix
+        </div>
+        <p>AI-enabled hospital management &amp; analytics system — digitized patient records, appointments, billing, and reports; added an AI chatbot, intelligent alerting, and real-time dashboards for hospital KPIs.</p>
+        <div class="repo-foot">
+          <span class="lang-chip"><span class="swatch" style="background:#3776AB"></span>Python · MySQL · AI/ML Integration</span>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-name"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Weather-App</div>
+        <p>Responsive weather app showing real-time temperature, humidity, and conditions for any city via the OpenWeatherMap API.</p>
+        <div class="repo-foot">
+          <span class="lang-chip"><span class="swatch" style="background:#563d7c"></span>CSS</span>
+          <a class="repo-link" href="https://github.com/Chandan21776/Weather-App" target="_blank" rel="noopener">View →</a>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-name"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>To-Do-List</div>
+        <p>Lightweight task manager for creating, tracking, and clearing daily to-dos in the browser.</p>
+        <div class="repo-foot">
+          <span class="lang-chip"><span class="swatch" style="background:#f1e05a"></span>JavaScript</span>
+          <a class="repo-link" href="https://github.com/Chandan21776/To-Do-List" target="_blank" rel="noopener">View →</a>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-name"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Brainwave_Matrix_Intern</div>
+        <p>Internship build exploring front-end structure and interactive page components.</p>
+        <div class="repo-foot">
+          <span class="lang-chip"><span class="swatch" style="background:#e34c26"></span>HTML</span>
+          <a class="repo-link" href="https://github.com/Chandan21776/Brainwave_Matrix_Intern" target="_blank" rel="noopener">View →</a>
+        </div>
+      </div>
+
+      <div class="repo-card">
+        <div class="repo-name"><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>CODTECH-Task1 / Task2</div>
+        <p>Task submissions from the CodTech internship track, covering front-end and applied JS/CSS exercises.</p>
+        <div class="repo-foot">
+          <span class="lang-chip"><span class="swatch" style="background:#f1e05a"></span>JS · CSS</span>
+          <a class="repo-link" href="https://github.com/Chandan21776?tab=repositories" target="_blank" rel="noopener">View →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications" class="wrap reveal">
+    <div class="eyebrow">05 · certs.md</div>
+    <h2 class="section-title">Certifications</h2>
+    <p class="section-sub">ls -la ./certifications</p>
+    <div class="ledger">
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Data Science &amp; Data Analytics Job Simulation</span><span class="ledger-issuer">Deloitte</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Data Visualisation — Empowering Business with Insights</span><span class="ledger-issuer">TATA · Forage</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Parallel Computer Architecture</span><span class="ledger-issuer">NPTEL</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Gen AI Data Analytics, Prompt Engineering (ChatGPT &amp; Databricks)</span><span class="ledger-issuer">Simplilearn SkillUp</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Power BI Workshop — Data Visualization &amp; BI</span><span class="ledger-issuer">OfficeMaster</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Data Science Master Virtual Internship</span><span class="ledger-issuer">Altair</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">UI/UX Designer Internship</span><span class="ledger-issuer">Codec Technologies</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">Search Engine Optimization (SEO) &amp; Web Analytics</span><span class="ledger-issuer">—</span></div>
+      <div class="ledger-row"><span class="ledger-icon">[✓]</span><span class="ledger-name">AI Samarth — Self-Paced Course</span><span class="ledger-issuer">CENTA</span></div>
+    </div>
+
+    <div class="pub-block">
+      <div class="p-label">Publication</div>
+      <p>"Comprehensive Study on Impact of Online Learning Platforms" — Journal of Emerging Technologies and Innovative Research, on the evolving role and effectiveness of digital learning in modern education.</p>
+    </div>
+
+    <div class="pub-block" style="border-color:var(--amber); margin-top:20px;">
+      <div class="p-label" style="color:var(--amber);">Education</div>
+      <p><strong style="color:var(--ink);">Master of Computer Applications (MCA)</strong> — JSPM University, Pune · 80% · Jun 2023 – Jul 2025<br>
+      <strong style="color:var(--ink);">Bachelor of Computer Science (BCS)</strong> — Savitribai Phule Pune University · 77% · Jun 2019 – Aug 2022</p>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume" class="wrap reveal">
+    <div class="eyebrow">06 · resume.pdf</div>
+    <h2 class="section-title">Resume</h2>
+    <div class="resume-panel">
+      <div class="resume-preview">
+        <iframe src="resume.pdf" title="Chandan Kumar Resume preview" loading="lazy"></iframe>
+      </div>
+      <div class="resume-actions">
+        <p>Full CV covering experience, skills, projects, and certifications in detail. View it inline or grab a copy.</p>
+        <a class="btn btn-primary" href="resume.pdf" target="_blank" rel="noopener">▸ Open Full View</a>
+        <a class="btn btn-ghost" href="resume.pdf" download="Chandan_Kumar_Resume.pdf">⭳ Download PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <footer id="contact" class="wrap reveal">
+    <div class="eyebrow">07 · contact.sh</div>
+    <h2 class="section-title">Get in touch</h2>
+    <div class="contact-term">
+      <div class="line"><span class="k">$</span> curl -X GET /chandan/availability</div>
+      <div class="line" style="color:var(--ink);">→ open to Software Engineering opportunities</div>
+      <div class="contact-links">
+        <a href="mailto:chandan21776@gmail.com">✉ chandan21776@gmail.com</a>
+        <a href="tel:+918856839400">☎ +91-8856839400</a>
+        <a href="https://linkedin.com/in/chandankumar-80050a249" target="_blank" rel="noopener">in/ LinkedIn</a>
+        <a href="https://github.com/Chandan21776" target="_blank" rel="noopener">⌥ GitHub</a>
+      </div>
+    </div>
+    <p class="fine-print">Built with HTML, CSS &amp; JS — no framework required. © 2026 Chandan Kumar.</p>
+  </footer>
+</main>
+
+<script>
+  // Typing effect in hero
+  (function(){
+    var el = document.getElementById('typed');
+    var text = 'whoami';
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){ el.textContent = text; }
+    else{
+      var i = 0;
+      function tick(){
+        if(i <= text.length){
+          el.textContent = text.slice(0, i);
+          i++;
+          setTimeout(tick, 110);
+        }
+      }
+      tick();
+    }
+  })();
+
+  // Commit accordion
+  document.querySelectorAll('.commit-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var commit = btn.closest('.commit');
+      var body = commit.querySelector('.commit-body');
+      var isOpen = commit.classList.contains('open');
+      // close others
+      document.querySelectorAll('.commit.open').forEach(function(c){
+        if(c !== commit){
+          c.classList.remove('open');
+          c.querySelector('.commit-body').style.maxHeight = null;
+          c.querySelector('.commit-head').setAttribute('aria-expanded','false');
+        }
+      });
+      if(isOpen){
+        commit.classList.remove('open');
+        body.style.maxHeight = null;
+        btn.setAttribute('aria-expanded','false');
+      } else {
+        commit.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+  // open the first commit by default
+  document.querySelector('.commit-head').click();
+
+  // Scroll reveal
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+
+  // active tab highlight on scroll
+  var sections = document.querySelectorAll('main section, footer');
+  var tabs = document.querySelectorAll('.tab');
+  var navObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        var id = entry.target.id;
+        tabs.forEach(function(t){
+          t.style.color = '';
+          t.style.borderColor = '';
+        });
+        var match = document.querySelector('.tab[href="#' + id + '"]');
+        if(match){ match.style.color = 'var(--ink)'; match.style.borderColor = 'var(--teal)'; }
+      }
+    });
+  }, {rootMargin: '-40% 0px -50% 0px'});
+  sections.forEach(function(s){ if(s.id) navObserver.observe(s); });
+</script>
+</body>
+</html>
